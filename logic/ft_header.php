@@ -9,10 +9,7 @@
 		else
 			$title = "InfiniteWiki";
 
-		// Setup stylesheet path
-		// $main = "/public/css/main.css";
-		// $navbar = "/public/css/navbar.css";
-		// $remixicon = "/public/css/import/remixicon.css";
+		$main = "/public/css/main.css";
 
 		// Create header
 		echo <<<EOT
@@ -20,6 +17,7 @@
 			<html lang="fr">
 			<head>
 				<meta charset="UTF-8">
+				<link rel="stylesheet" href="$main">
 				<title>$title</title>
 			</head>
 		EOT;

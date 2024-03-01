@@ -3,19 +3,28 @@
 	user-select: none;
 	background-color: rgb(19, 20, 21);
 	color: #ffffff;
-	margin: 0px;
+	margin: 0;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: none;
+}
+
+.main {
+	height: 100vh;
+	display: block;
+	overflow-x: hidden;
+	padding: 1rem 3rem 3rem;
 }
 
 .recipe {
-	margin: 20px;
 }
 
 .used {
-	margin: 20px;
 }
 
 .search {
-	margin: 20px;
 }
 
 .item {
@@ -32,9 +41,22 @@
 }
 
 .item:hover {
-	background: linear-gradient(180deg, #3d4249, #000 80%);
+	background: linear-gradient(180deg, #3e7e59, #000 80%);
 }
 
-.noclick {
+.noclick:hover {
 	cursor: default;
+	background: linear-gradient(180deg, #803535, #000 80%);
+}
+
+.searchbar {
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    margin: 10px;
+    text-align: center;
+    background-color: #242424;
+    border: none;
+    color: #c6c7c7;
 }

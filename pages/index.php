@@ -7,19 +7,39 @@
 	require($_SERVER["DOCUMENT_ROOT"] . "/logic/ft_getDataById.php");
 	require($_SERVER["DOCUMENT_ROOT"] . "/logic/ft_getUseInCraft.php");
 	require($_SERVER["DOCUMENT_ROOT"] . "/logic/ft_getStat.php");
+	require($_SERVER["DOCUMENT_ROOT"] . "/logic/ft_getItems.php");
+	require($_SERVER["DOCUMENT_ROOT"] . "/logic/search.php");
 ?>
+
+<div class="main">
 
 <?php
 	echo "<div class='stat'>Item : " . getItemCount() . ", Recipes : " . getCraftCount() . ", First discoveries : " . getDiscoverCount() . "</div>";
-
-	if (isset($_GET["item"])) {
 ?>
 
+	<div class='search'>
+		<form method="POST">
+			<input class="searchbar" type="text" name="search" placeholder="Search items" autocomplete="off" required/>
+			<input type="submit" name="send"/>
+		</form>
+	</div>
+
 <?php
+	if (isset($_GET["search"])) {
+		echo "<div class='search'>";
+
+		echo "Recherche " . $_GET["search"] . "<br><br>";
+		foreach (getItem($_GET["search"]) as $value) {
+			echo "<a class='item' href='?item=" . $value["name"] . "'>" . $value["symbole"] . " " . $value["name"] . "</a>";
+		}
+
+		echo "</div>";
+	}
+
+	if (isset($_GET["item"])) {
+		unset($_POST);
+
 		echo "<div class='recipe'>";
-
-		echo "<a href='/'>Retour</a><br><br>";
-
 		echo "<h1>Recipes:</h1>";
 
 		foreach (getCraft($_GET["item"]) as $value) {
@@ -82,28 +102,13 @@
 			echo $line . "<br>";
 		}
 		echo "</div>";
-	} else {
-?>
+	}
 
-	<div class='search'>
-
-	<form method="POST">
-		<input type="text" name="search" autofocus required/>
-		<input type="submit" name="send"/>
-	</form>
-
-	</div>
-
-<?php
-		if (isset($_POST["send"])) {
-			echo "<div class='search'>";
-
-			echo "Recherche " . $_POST["search"] . "<br><br>";
-			foreach (getItem($_POST["search"]) as $value) {
-				echo "<a class='item' href='?item=" . $value["name"] . "'>" . $value["symbole"] . " " . $value["name"] . "</a>";
-			}
-
-			echo "</div>";
+	if (!$_GET) {
+		foreach (getItems() as $value) {
+			echo "<a class='item' href='?item=" . $value["name"] . "'>" . $value["symbole"] . " " . $value["name"] . "</a>";
 		}
 	}
 ?>
+
+</div>

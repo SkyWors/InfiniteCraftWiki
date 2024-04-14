@@ -44,6 +44,10 @@
 	background: linear-gradient(180deg, #3e7e59, #000 80%);
 }
 
+.firstdiscovery:hover {
+	background: linear-gradient(180deg, #9c822d, #000 80%) !important;
+}
+
 .noclick:hover {
 	cursor: default;
 	background: linear-gradient(180deg, #803535, #000 80%);

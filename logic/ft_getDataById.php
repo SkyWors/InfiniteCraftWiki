@@ -3,7 +3,7 @@
 function getDataById($id) {
 	$db = dbConnect();
 
-	$query = "SELECT name, symbole FROM item WHERE id = :id";
+	$query = "SELECT name, symbole, isNew FROM item WHERE id = :id";
 
 	try {
 		$queryPrep = $db->prepare($query);

@@ -49,17 +49,27 @@
 
 			$line = "";
 
+			$isNew1 = "";
+			$isNew2 = "";
+			$isNewResult = "";
+			if ($item1["isNew"])
+				$isNew1 = "firstdiscovery";
+			if ($item2["isNew"])
+				$isNew2 = "firstdiscovery";
+			if ($result["isNew"])
+				$isNewResult = "firstdiscovery";
+
 			if ($item1["name"] != $result["name"])
-				$line .= "<a class='item' href='?item=" . $item1["name"] . "'>" . $item1["symbole"] . " " . $item1["name"] . "</a>";
+				$line .= "<a class='item " . $isNew1 . "' href='?item=" . $item1["name"] . "'>" . $item1["symbole"] . " " . $item1["name"] . "</a>";
 			else
-				$line .= "<a class='item noclick'>" . $item1["symbole"] . " " . $item1["name"] . "</a>";
+				$line .= "<a class='item " . $isNew1 . " noclick'>" . $item1["symbole"] . " " . $item1["name"] . "</a>";
 
 			if ($item2["name"] != $result["name"])
-				$line .= " + <a class='item' href='?item=" . $item2["name"] . "'>" . $item2["symbole"] . " " . $item2["name"] . "</a>";
+				$line .= " + <a class='item " . $isNew2 . "' href='?item=" . $item2["name"] . "'>" . $item2["symbole"] . " " . $item2["name"] . "</a>";
 			else
-				$line .= " + " . "<a class='item noclick'>" . $item2["symbole"] . " " . $item2["name"] . "</a>";
+				$line .= " + " . "<a class='item " . $isNew2 . " noclick'>" . $item2["symbole"] . " " . $item2["name"] . "</a>";
 
-			$line .= " = " . "<a class='item noclick'>" . $result["symbole"] . " " . $result["name"] . "</a>";
+			$line .= " = " . "<a class='item " . $isNewResult . " noclick'>" . $result["symbole"] . " " . $result["name"] . "</a>";
 
 			echo $line . "<br>";
 		}
@@ -73,31 +83,47 @@
 			$item2 = getDataById($value["idItem2"]);
 			$result = getDataById($value["idResult"]);
 
+			$isNew1 = "";
+			$isNew2 = "";
+			$isNewResult = "";
+			if ($item1["isNew"])
+				$isNew1 = "firstdiscovery";
+			if ($item2["isNew"])
+				$isNew2 = "firstdiscovery";
+			if ($result) {
+				if ($result["isNew"])
+					$isNewResult = "firstdiscovery";
+			}
+
 			if ($item2["name"] == $_GET["item"]) {
 				$temp = $item1;
 				$item1 = $item2;
 				$item2 = $temp;
+
+				$temp = $isNew1;
+				$isNew1 = $isNew2;
+				$isNew2 = $temp;
 			}
 
 			$line = "";
 
 			if ($item1["name"] != $_GET["item"])
-				$line .= "<a class='item' href='?item=" . $item1["name"] . "'>" . $item1["symbole"] . " " . $item1["name"] . "</a>";
+				$line .= "<a class='item " . $isNew1 . "' href='?item=" . $item1["name"] . "'>" . $item1["symbole"] . " " . $item1["name"] . "</a>";
 			else
-				$line .= "<a class='item noclick'>" . $item1["symbole"] . " " . $item1["name"] . "</a>";
+				$line .= "<a class='item " . $isNew1 . " noclick'>" . $item1["symbole"] . " " . $item1["name"] . "</a>";
 
 			if ($item2["name"] != $_GET["item"])
-				$line .= " + <a class='item' href='?item=" . $item2["name"] . "'>" . $item2["symbole"] . " " . $item2["name"] . "</a>";
+				$line .= " + <a class='item " . $isNew2 . "' href='?item=" . $item2["name"] . "'>" . $item2["symbole"] . " " . $item2["name"] . "</a>";
 			else
-				$line .= " + " . "<a class='item noclick'>" . $item2["symbole"] . " " . $item2["name"] . "</a>";
+				$line .= " + " . "<a class='item " . $isNew2 . " noclick'>" . $item2["symbole"] . " " . $item2["name"] . "</a>";
 
 			if (!$result)
 				$line .= " = Nothing.";
 			else
 				if ($result["name"] != $_GET["item"])
-					$line .= " = <a class='item' href='?item=" . $result["name"] . "'>" . $result["symbole"] . " " . $result["name"] . "</a>";
+					$line .= " = <a class='item " . $isNewResult . "' href='?item=" . $result["name"] . "'>" . $result["symbole"] . " " . $result["name"] . "</a>";
 				else
-					$line .= " = " . "<a class='item noclick'>" . $result["symbole"] . " " . $result["name"] . "</a>";
+					$line .= " = " . "<a class='item " . $isNewResult . " noclick'>" . $result["symbole"] . " " . $result["name"] . "</a>";
 
 			echo $line . "<br>";
 		}
@@ -106,7 +132,10 @@
 
 	if (!$_GET) {
 		foreach (getItems() as $value) {
-			echo "<a class='item' href='?item=" . $value["name"] . "'>" . $value["symbole"] . " " . $value["name"] . "</a>";
+			$isNew = "";
+			if ($value["isNew"])
+				$isNew = "firstdiscovery";
+			echo "<a class='item " . $isNew . "' href='?item=" . $value["name"] . "'>" . $value["symbole"] . " " . $value["name"] . "</a>";
 		}
 	}
 ?>
